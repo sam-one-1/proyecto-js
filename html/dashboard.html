@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Dashboard - Acme Bank</title>
+</head>
+<body>
+    <header>
+        <h1>Acme Bank</h1>
+        <div class="btn-container">
+            <button id="logout-btn" class="btn btn-secondary">Cerrar Sesión</button>
+        </div>
+    </header>
+    
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-info">
+                <h3 id="user-name">Juan Perez</h3>
+                <p id="account-number">Cuenta: 100000001</p>
+            </div>
+            
+            <nav class="menu">
+                <ul>
+                    <li class="active"><a href="#" data-section="summary">Resumen</a></li>
+                    <li><a href="#" data-section="transactions">Transacciones</a></li>
+                    <li><a href="#" data-section="deposit">Consignación</a></li>
+                    <li><a href="#" data-section="withdraw">Retiro</a></li>
+                    <li><a href="#" data-section="payments">Pago Servicios</a></li>
+                    <li><a href="#" data-section="statement">Extracto</a></li>
+                    <li><a href="#" data-section="certificate">Certificado</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <section id="summary-section" class="content-section active">
+                <!-- Contenido del resumen -->
+            </section>
+            
+            <section id="transactions-section" class="content-section">
+                <!-- Contenido de transacciones -->
+            </section>
+            
+            <!-- Otras secciones -->
+        </main>
+    </div>
+    
+    <script src="dashboard.js"></script>
+    <script src="/script/app.js"></script>
+</body>
+</html>

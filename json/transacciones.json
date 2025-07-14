@@ -1,0 +1,14 @@
+{
+    "transactions": [
+      {
+        "id": "trans001",
+        "accountNumber": "100000001",
+        "date": "2023-10-16T09:30:00Z",
+        "reference": "REF123456",
+        "type": "deposit",
+        "description": "Consignación inicial",
+        "amount": 1000000,
+        "balanceAfter": 1000000
+      }
+    ]
+  }

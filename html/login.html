@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Acme Bank - Iniciar Sesión</title>
+</head>
+<body>
+    <header>
+        <h1>Acme Bank</h1>
+        <div class="btn1">
+            <a href="/index.html"><button class="btn">Inicio</button></a>
+            <a href="/html/register.html"><button class="btn">Registrarse</button></a>
+        </div>
+    </header>
+    
+    <main class="login-main">
+        <section class="login-section">
+            <div class="login-card">
+                <h2>Iniciar Sesión</h2>
+                <form class="login-form">
+                    <div class="form-group">
+                        <label for="username">Usuario o Correo Electrónico</label>
+                        <input type="text" id="username" name="username" placeholder="Ingresa tu usuario o email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                        <div class="forgot-password">
+                            <a href="#">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Recordar mi usuario</label>
+                    </div>
+                    
+                    <button type="submit" class="btn login-btn">Ingresar</button>
+                </form>
+                
+                <div class="login-divider">
+                    <span>o</span>
+                </div>
+                
+                <div class="social-login">
+                    <p>Iniciar sesión con:</p>
+                    <div class="social-buttons">
+                        <button class="btn social-btn google">
+                            <span>Google</span>
+                        </button>
+                        <button class="btn social-btn facebook">
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="register-link">
+                    ¿No tienes una cuenta? <a href="/html/register.html">Regístrate aquí</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Seguridad</h3>
+                <ul>
+                    <li><a href="#">Protección de datos</a></li>
+                    <li><a href="#">Banca segura</a></li>
+                    <li><a href="#">Reportar fraude</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Ayuda</h3>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Contáctanos</a></li>
+                    <li><a href="#">Soporte 24/7</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Políticas de privacidad</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Acme Bank. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="/script/login.js"></script>
+    <script src="/script/app.js"></script>
+</body>
+</html>
