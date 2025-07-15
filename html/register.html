@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Acme Bank</h1>
-        <div class="btn1">
+        <div class="btn-container">
             <a href="/index.html"><button class="btn">Inicio</button></a>
             <a href="/html/login.html"><button class="btn">Iniciar Sesión</button></a>
         </div>
@@ -24,24 +24,61 @@
                 <form class="register-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="first-name">Nombre</label>
-                            <input type="text" id="first-name" name="first-name" placeholder="Ingresa tu nombre" required>
+                            <label for="id-type">Tipo de Identificación</label>
+                            <select id="id-type" name="id-type" required>
+                                <option value="" disabled selected>Seleccione</option>
+                                <option value="cc">Cédula de Ciudadanía</option>
+                                <option value="ce">Cédula de Extranjería</option>
+                                <option value="passport">Pasaporte</option>
+                            </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="last-name">Apellido</label>
-                            <input type="text" id="last-name" name="last-name" placeholder="Ingresa tu apellido" required>
+                            <label for="id-number">Número de Identificación</label>
+                            <input type="text" id="id-number" name="id-number" placeholder="Ingresa tu número de identificación" required>
                         </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">Nombres</label>
+                            <input type="text" id="first-name" name="first-name" placeholder="Ingresa tus nombres" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="last-name">Apellidos</label>
+                            <input type="text" id="last-name" name="last-name" placeholder="Ingresa tus apellidos" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">Género</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Seleccione</option>
+                            <option value="male">Masculino</option>
+                            <option value="female">Femenino</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número telefónico" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Correo electrónico</label>
                         <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="phone">Teléfono</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número telefónico" required>
+                        <label for="address">Dirección de Residencia</label>
+                        <input type="text" id="address" name="address" placeholder="Ej. Calle 10 # 20-30" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">Ciudad de Residencia</label>
+                        <input type="text" id="city" name="city" placeholder="Ej. Cúcuta" required>
                     </div>
                     
                     <div class="form-row">
@@ -56,22 +93,6 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="document-type">Tipo de documento</label>
-                        <select id="document-type" name="document-type" required>
-                            <option value="" disabled selected>Selecciona tu documento</option>
-                            <option value="cc">Cédula de ciudadanía</option>
-                            <option value="ce">Cédula de extranjería</option>
-                            <option value="passport">Pasaporte</option>
-                            <option value="nit">NIT</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="document-number">Número de documento</label>
-                        <input type="text" id="document-number" name="document-number" placeholder="Ingresa tu número de documento" required>
-                    </div>
-                    
                     <div class="form-group terms">
                         <input type="checkbox" id="terms" name="terms" required>
                         <label for="terms">Acepto los <a href="#">Términos y condiciones</a> y la <a href="#">Política de privacidad</a> de Acme Bank</label>
@@ -82,11 +103,18 @@
                         <label for="marketing">Deseo recibir información sobre productos y promociones</label>
                     </div>
                     
-                    <button type="submit" class="btn register-btn">Registrarme</button>
+                    <div class="form-actions-register">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/html/login.html'">Cancelar</button>
+                        <button type="submit" class="btn register-btn">Registrarme</button>
+                    </div>
                 </form>
-                
-                <div class="login-link">
-                    ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
+
+                <div id="registration-summary" class="summary-card" style="display:none;">
+                    <h3>¡Registro Exitoso!</h3>
+                    <p>¡Bienvenido a Acme Bank! Tu cuenta ha sido creada exitosamente.</p>
+                    <p><strong>Número de Cuenta:</strong> <span id="summary-account-number"></span></p>
+                    <p><strong>Fecha de Creación:</strong> <span id="summary-created-at"></span></p>
+                    <a href="/html/login.html" class="btn">Ir a Iniciar Sesión</a>
                 </div>
             </div>
         </section>
@@ -123,7 +151,8 @@
         </div>
     </footer>
     
-    <script src="/script/register.js"></script>
+    <script src="/script/utils.js"></script>
     <script src="/script/app.js"></script>
+    <script src="/script/register.js"></script>
 </body>
 </html>

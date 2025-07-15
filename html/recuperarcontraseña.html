@@ -10,7 +10,7 @@
     <header>
         <h1>Acme Bank</h1>
         <div class="btn-container">
-            <a href="/index.html"><button class="btn">Volver a Login</button></a>
+            <a href="/html/login.html"><button class="btn">Volver a Login</button></a>
         </div>
     </header>
     
@@ -24,8 +24,8 @@
                         <label for="id-type">Tipo de Identificación</label>
                         <select id="id-type" name="id-type" required>
                             <option value="" disabled selected>Seleccione</option>
-                            <option value="cc">Cédula</option>
-                            <option value="ce">Cédula Extranjería</option>
+                            <option value="cc">Cédula de Ciudadanía</option>
+                            <option value="ce">Cédula de Extranjería</option>
                             <option value="passport">Pasaporte</option>
                         </select>
                     </div>
@@ -47,6 +47,7 @@
                 </form>
                 
                 <form id="new-password-form" class="new-password-form" style="display: none;">
+                    <h3>Establecer Nueva Contraseña</h3>
                     <div class="form-group">
                         <label for="new-password">Nueva Contraseña</label>
                         <input type="password" id="new-password" name="new-password" required>
@@ -58,6 +59,7 @@
                     </div>
                     
                     <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='login.html'">Cancelar</button>
                         <button type="submit" class="btn">Cambiar Contraseña</button>
                     </div>
                 </form>
@@ -65,7 +67,8 @@
         </section>
     </main>
     
-    <script src="/script/recuperar.js"></script>
+    <script src="/script/utils.js"></script>
     <script src="/script/app.js"></script>
+    <script src="/script/recuperar.js"></script>
 </body>
 </html>

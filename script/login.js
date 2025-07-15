@@ -1,190 +1,80 @@
-// Funcionalidad básica para mostrar/ocultar contraseña
- document.querySelector('.show-password')?.addEventListener('click', function() {
-    const passwordInput = document.getElementById('password');
-     const icon = this.querySelector('i');
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-             icon.classList.replace('fa-eye', 'fa-eye-slash');
-    } else {
-         passwordInput.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-// login.js - Manejo de la página de inicio de sesión
+// script/login.js - Manejo de la página de inicio de sesión
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar datos si no existen
-    initializeStorage();
-    
     // Manejar el envío del formulario de login
     const loginForm = document.querySelector('.login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
     
-    // Mostrar/ocultar contraseña
-    setupPasswordToggle();
+    // Cargar el usuario recordado si existe
+    loadRememberedUser();
 });
 
 /**
- * Inicializa el almacenamiento local con datos de prueba si no existen
- */
-function initializeStorage() {
-    if (!localStorage.getItem('users')) {
-        const demoUsers = [
-            {
-                idType: 'cc',
-                idNumber: '123456789',
-                firstName: 'Admin',
-                lastName: 'Demo',
-                email: 'admin@acmebank.com',
-                password: 'Demo1234', // En producción, esto debería ser un hash
-                accounts: ['100000001'],
-                createdAt: new Date().toISOString()
-            }
-        ];
-        localStorage.setItem('users', JSON.stringify(demoUsers));
-    }
-    
-    if (!localStorage.getItem('accounts')) {
-        const demoAccounts = [
-            {
-                accountNumber: '100000001',
-                userId: '123456789',
-                balance: 5000000,
-                createdAt: new Date().toISOString(),
-                transactions: []
-            }
-        ];
-        localStorage.setItem('accounts', JSON.stringify(demoAccounts));
-    }
-    
-    if (!localStorage.getItem('transactions')) {
-        localStorage.setItem('transactions', JSON.stringify([]));
-    }
-}
-
-/**
- * Maneja el envío del formulario de login
- * @param {Event} e - Evento de submit
+ * Maneja el envío del formulario de login.
+ * @param {Event} e - Evento de submit.
  */
 function handleLogin(e) {
     e.preventDefault();
     
     // Obtener valores del formulario
-    const username = document.getElementById('username').value.trim();
+    const idType = document.getElementById('id-type').value;
+    const idNumber = document.getElementById('id-number').value.trim();
     const password = document.getElementById('password').value;
     const rememberMe = document.getElementById('remember').checked;
     
     // Validar campos
-    if (!username || !password) {
-        showAlert('Por favor complete todos los campos', 'error');
+    if (!idType || !idNumber || !password) {
+        showAlert('Por favor seleccione el tipo de identificación, ingrese el número y la contraseña.', 'error');
         return;
     }
     
-    // Determinar si el username es email o número de documento
-    let idType, idNumber;
-    if (username.includes('@')) {
-        // Buscar por email
-        const users = JSON.parse(localStorage.getItem('users'));
-        const user = users.find(u => u.email === username);
-        
-        if (!user) {
-            showAlert('Credenciales incorrectas', 'error');
-            return;
-        }
-        
-        idType = user.idType;
-        idNumber = user.idNumber;
-    } else {
-        // Asumir que es número de documento (requeriría más lógica en producción)
-        idType = 'cc'; // Tipo por defecto, en producción pediríamos ambos campos
-        idNumber = username;
-    }
-    
-    // Autenticar usuario
+    // Autenticar usuario usando la función de utils.js
     const user = authenticateUser(idType, idNumber, password);
     
     if (user) {
-        // Guardar en sesión
+        // Guardar usuario actual en sessionStorage
         sessionStorage.setItem('currentUser', JSON.stringify(user));
         
-        // Si marcó "Recordar usuario", guardar en localStorage
+        // Si marcó "Recordar usuario", guardar los datos de login en localStorage
         if (rememberMe) {
-            localStorage.setItem('rememberedUser', username);
+            localStorage.setItem('rememberedIdType', idType);
+            localStorage.setItem('rememberedIdNumber', idNumber);
         } else {
-            localStorage.removeItem('rememberedUser');
+            localStorage.removeItem('rememberedIdType');
+            localStorage.removeItem('rememberedIdNumber');
         }
         
         // Redirigir al dashboard
         window.location.href = 'dashboard.html';
     } else {
-        showAlert('Credenciales incorrectas. Por favor verifique sus datos.', 'error');
+        showAlert('No se pudo validar su identidad. Por favor verifique sus credenciales.', 'error');
     }
 }
 
 /**
- * Autentica un usuario
- * @param {string} idType - Tipo de identificación
- * @param {string} idNumber - Número de identificación
- * @param {string} password - Contraseña
- * @returns {object|null} - Objeto de usuario o null si no se autentica
- */
-function authenticateUser(idType, idNumber, password) {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // En producción, deberíamos comparar con un hash de la contraseña
-    const user = users.find(user => 
-        user.idType === idType && 
-        user.idNumber === idNumber && 
-        user.password === password
-    );
-    
-    return user || null;
-}
-
-/**
- * Configura el botón para mostrar/ocultar contraseña
- */
-function setupPasswordToggle() {
-    const passwordInput = document.getElementById('password');
-    const showPasswordBtn = document.querySelector('.show-password');
-    
-    if (passwordInput && showPasswordBtn) {
-        showPasswordBtn.addEventListener('click', function() {
-            const icon = this.querySelector('i');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-    }
-}
-
-/**
- * Muestra un mensaje de alerta
- * @param {string} message - Mensaje a mostrar
- * @param {string} type - Tipo de alerta (error, success, warning)
+ * Muestra un mensaje de alerta específico para el formulario de login.
+ * @param {string} message - Mensaje a mostrar.
+ * @param {string} type - Tipo de alerta ('error', 'success').
  */
 function showAlert(message, type = 'error') {
     // Eliminar alertas previas
-    const existingAlert = document.querySelector('.login-alert');
+    const existingAlert = document.querySelector('.form-alert'); // Clase específica para alertas de formulario
     if (existingAlert) {
         existingAlert.remove();
     }
     
     // Crear elemento de alerta
     const alertDiv = document.createElement('div');
-    alertDiv.className = `login-alert alert-${type}`;
+    alertDiv.className = `form-alert alert-${type}`;
     alertDiv.textContent = message;
     
     // Insertar antes del formulario
     const loginCard = document.querySelector('.login-card');
-    if (loginCard) {
-        loginCard.insertBefore(alertDiv, loginCard.firstChild);
+    const loginForm = document.querySelector('.login-form');
+    if (loginCard && loginForm) {
+        loginCard.insertBefore(alertDiv, loginForm);
         
         // Eliminar después de 5 segundos
         setTimeout(() => {
@@ -194,15 +84,15 @@ function showAlert(message, type = 'error') {
 }
 
 /**
- * Carga el usuario recordado si existe
+ * Carga el tipo y número de identificación recordados si existen en localStorage.
  */
 function loadRememberedUser() {
-    const rememberedUser = localStorage.getItem('rememberedUser');
-    if (rememberedUser) {
-        document.getElementById('username').value = rememberedUser;
+    const rememberedIdType = localStorage.getItem('rememberedIdType');
+    const rememberedIdNumber = localStorage.getItem('rememberedIdNumber');
+
+    if (rememberedIdType && rememberedIdNumber) {
+        document.getElementById('id-type').value = rememberedIdType;
+        document.getElementById('id-number').value = rememberedIdNumber;
         document.getElementById('remember').checked = true;
     }
 }
-
-// Cargar usuario recordado al cargar la página
-window.addEventListener('load', loadRememberedUser);

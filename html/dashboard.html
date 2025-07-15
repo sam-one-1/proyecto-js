@@ -17,37 +17,201 @@
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="user-info">
-                <h3 id="user-name">Juan Perez</h3>
-                <p id="account-number">Cuenta: 100000001</p>
+                <h3 id="user-name"></h3>
+                <p id="account-number"></p>
+                <p class="balance-display">Saldo: <span id="current-balance"></span></p>
             </div>
             
             <nav class="menu">
                 <ul>
-                    <li class="active"><a href="#" data-section="summary">Resumen</a></li>
-                    <li><a href="#" data-section="transactions">Transacciones</a></li>
-                    <li><a href="#" data-section="deposit">Consignación</a></li>
-                    <li><a href="#" data-section="withdraw">Retiro</a></li>
-                    <li><a href="#" data-section="payments">Pago Servicios</a></li>
-                    <li><a href="#" data-section="statement">Extracto</a></li>
-                    <li><a href="#" data-section="certificate">Certificado</a></li>
+                    <li><a href="#" class="nav-link" data-section="summary">Resumen</a></li>
+                    <li><a href="#" class="nav-link" data-section="transactions">Resumen de Transacciones</a></li>
+                    <li><a href="#" class="nav-link" data-section="deposit">Consignación Electrónica</a></li>
+                    <li><a href="#" class="nav-link" data-section="withdraw">Retiro de Dinero</a></li>
+                    <li><a href="#" class="nav-link" data-section="payments">Pago de Servicios Públicos</a></li>
+                    <li><a href="#" class="nav-link" data-section="statement">Extracto Bancario</a></li>
+                    <li><a href="#" class="nav-link" data-section="certificate">Certificado Bancario</a></li>
                 </ul>
             </nav>
         </aside>
         
         <main class="main-content">
             <section id="summary-section" class="content-section active">
-                <!-- Contenido del resumen -->
+                <h2>Resumen de tu Cuenta</h2>
+                <div class="account-summary-card">
+                    <p><strong>Número de Cuenta:</strong> <span id="summary-account-num"></span></p>
+                    <p><strong>Saldo Actual:</strong> <span id="summary-current-balance"></span></p>
+                    <p><strong>Fecha de Creación:</strong> <span id="summary-created-at"></span></p>
+                </div>
+
+                <h3>Últimas Transacciones</h3>
+                <div id="last-transactions-container">
+                    </div>
             </section>
             
             <section id="transactions-section" class="content-section">
-                <!-- Contenido de transacciones -->
+                <h2>Resumen de Transacciones</h2>
+                <div id="all-transactions-container">
+                    </div>
+                <button id="print-transactions-btn" class="btn print-btn">Imprimir Resumen</button>
             </section>
             
-            <!-- Otras secciones -->
+            <section id="deposit-section" class="content-section">
+                <h2>Consignación Electrónica</h2>
+                <form id="deposit-form" class="transaction-form">
+                    <div class="form-group">
+                        <label>Número de Cuenta:</label>
+                        <p id="deposit-account-number" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Titular:</label>
+                        <p id="deposit-user-name" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-amount">Cantidad a Consignar</label>
+                        <input type="number" id="deposit-amount" name="deposit-amount" min="1" step="any" required>
+                    </div>
+                    <button type="submit" class="btn">Consignar</button>
+                </form>
+                <div id="deposit-summary-container" class="summary-card" style="display:none;">
+                    <h3>Resumen de Consignación</h3>
+                    <p><strong>Fecha:</strong> <span id="deposit-summary-date"></span></p>
+                    <p><strong>Referencia:</strong> <span id="deposit-summary-ref"></span></p>
+                    <p><strong>Tipo:</strong> <span id="deposit-summary-type"></span></p>
+                    <p><strong>Descripción:</strong> <span id="deposit-summary-desc"></span></p>
+                    <p><strong>Valor:</strong> <span id="deposit-summary-amount"></span></p>
+                    <button id="print-deposit-btn" class="btn print-btn">Imprimir Resumen</button>
+                    <button class="btn btn-secondary" onclick="window.location.reload();">Nueva Consignación</button>
+                </div>
+            </section>
+
+            <section id="withdraw-section" class="content-section">
+                <h2>Retiro de Dinero</h2>
+                <form id="withdraw-form" class="transaction-form">
+                    <div class="form-group">
+                        <label>Número de Cuenta:</label>
+                        <p id="withdraw-account-number" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Titular:</label>
+                        <p id="withdraw-user-name" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="withdraw-amount">Cantidad a Retirar</label>
+                        <input type="number" id="withdraw-amount" name="withdraw-amount" min="1" step="any" required>
+                    </div>
+                    <button type="submit" class="btn">Retirar</button>
+                </form>
+                <div id="withdraw-summary-container" class="summary-card" style="display:none;">
+                    <h3>Resumen de Retiro</h3>
+                    <p><strong>Fecha:</strong> <span id="withdraw-summary-date"></span></p>
+                    <p><strong>Referencia:</strong> <span id="withdraw-summary-ref"></span></p>
+                    <p><strong>Tipo:</strong> <span id="withdraw-summary-type"></span></p>
+                    <p><strong>Descripción:</strong> <span id="withdraw-summary-desc"></span></p>
+                    <p><strong>Valor:</strong> <span id="withdraw-summary-amount"></span></p>
+                    <button id="print-withdraw-btn" class="btn print-btn">Imprimir Resumen</button>
+                    <button class="btn btn-secondary" onclick="window.location.reload();">Nuevo Retiro</button>
+                </div>
+            </section>
+
+            <section id="payments-section" class="content-section">
+                <h2>Pago de Servicios Públicos</h2>
+                <form id="payments-form" class="transaction-form">
+                    <div class="form-group">
+                        <label>Número de Cuenta:</label>
+                        <p id="payments-account-number" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Titular:</label>
+                        <p id="payments-user-name" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-type">Servicio a Pagar</label>
+                        <select id="service-type" name="service-type" required>
+                            <option value="" disabled selected>Seleccione un servicio</option>
+                            <option value="Energía">Energía</option>
+                            <option value="Agua">Agua</option>
+                            <option value="Gas Natural">Gas Natural</option>
+                            <option value="Internet">Internet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-reference">Referencia de Pago</label>
+                        <input type="text" id="payment-reference" name="payment-reference" placeholder="Ingrese la referencia de la factura" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-amount">Valor a Pagar</label>
+                        <input type="number" id="payment-amount" name="payment-amount" min="1" step="any" required>
+                    </div>
+                    <button type="submit" class="btn">Pagar</button>
+                </form>
+                <div id="payments-summary-container" class="summary-card" style="display:none;">
+                    <h3>Resumen de Pago de Servicio</h3>
+                    <p><strong>Fecha:</strong> <span id="payments-summary-date"></span></p>
+                    <p><strong>Referencia Banco:</strong> <span id="payments-summary-ref-bank"></span></p>
+                    <p><strong>Tipo:</strong> <span id="payments-summary-type"></span></p>
+                    <p><strong>Concepto:</strong> <span id="payments-summary-desc"></span></p>
+                    <p><strong>Valor Pagado:</strong> <span id="payments-summary-amount"></span></p>
+                    <button id="print-payments-btn" class="btn print-btn">Imprimir Resumen</button>
+                    <button class="btn btn-secondary" onclick="window.location.reload();">Nuevo Pago</button>
+                </div>
+            </section>
+
+            <section id="statement-section" class="content-section">
+                <h2>Extracto Bancario</h2>
+                <form id="statement-form" class="transaction-form">
+                    <div class="form-group">
+                        <label>Número de Cuenta:</label>
+                        <p id="statement-account-number" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Titular:</label>
+                        <p id="statement-user-name" class="display-value"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="statement-year">Año</label>
+                        <select id="statement-year" name="statement-year" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="statement-month">Mes</label>
+                        <select id="statement-month" name="statement-month" required>
+                            <option value="" disabled selected>Seleccione un mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Generar Extracto</button>
+                </form>
+                <div id="statement-results" style="display:none;">
+                    <h3>Movimientos de <span id="statement-period"></span></h3>
+                    <div id="statement-transactions-container">
+                        </div>
+                    <button id="print-statement-btn" class="btn print-btn">Imprimir Extracto</button>
+                </div>
+            </section>
+
+            <section id="certificate-section" class="content-section">
+                <h2>Certificado Bancario</h2>
+                <div id="certificate-content" class="certificate-card">
+                    </div>
+                <button id="print-certificate-btn" class="btn print-btn">Imprimir Certificado</button>
+            </section>
+            
         </main>
     </div>
     
-    <script src="dashboard.js"></script>
+    <script src="/script/utils.js"></script>
     <script src="/script/app.js"></script>
+    <script src="/script/dashboard.js"></script>
 </body>
 </html>
